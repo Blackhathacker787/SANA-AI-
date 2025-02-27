@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Chatbot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    /* Video background */
+    #bg-video {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      z-index: -1;
+    }
+
+    .container, .form-container {
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      width: 90%;
+      max-width: 500px;
+    }
+
+    .logo {
+      font-size: 5rem;
+      color: #ffffff;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .welcome {
+      margin-top: 20px;
+      font-size: 2rem;
+      color: #ffeb3b;
+    }
+
+    .start-btn, .form-container button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1.5rem;
+      color: #fff;
+      background: linear-gradient(135deg, #007bff, #0056b3);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.3s ease;
+    }
+
+    .start-btn:hover, .form-container button:hover {
+      background: linear-gradient(135deg, #0056b3, #004085);
+      transform: translateY(-2px);
+    }
+
+    .form-container input {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #fff;
+      background-color: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      border-radius: 5px;
+    }
+
+    .form-container input::placeholder {
+      color: #ccc;
+    }
+
+    .toggle-button {
+      margin-top: 10px;
+      cursor: pointer;
+      color: #ffeb3b;
+      text-decoration: underline;
+    }
+
+    .password-toggle {
+      cursor: pointer;
+      margin-left: -30px;
+    }
+
+    .loading {
+      display: none;
+      font-size: 1.5rem;
+      color: #ffeb3b;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Background Video -->
+<video autoplay muted loop id="bg-video">
+  <source src="https://videos.pexels.com/video-files/3129957/3129957-uhd_2560_1440_25fps.mp4" type="video/mp4">
+</video>
+
+<!-- Front Page -->
+<div class="container" id="front-page">
+  <div class="logo">AI</div>
+  <div class="welcome">Welcome to AI Chatbot</div>
+  <button class="start-btn" onclick="showSignInSignUp()">Start Chat</button>
+</div>
+
+<!-- Sign In/Sign Up Form -->
+<div class="form-container" id="sign-in-sign-up" style="display: none;">
+  <h1 id="form-title">Sign In</h1>
+  <div id="form-fields">
+    <input type="text" id="signin-username" placeholder="Username" required>
+    <input type="password" id="signin-password" placeholder="Password" required>
+    <span class="password-toggle" onclick="togglePassword('signin-password')">👁️</span>
+  </div>
+  <button id="submit-button" onclick="submitForm()">Sign In</button>
+  <div class="toggle-button" onclick="toggleForm()">Don't have an account? Sign Up</div>
+  <div class="loading" id="loading">Loading...</div>
+</div>
+
+<script>
+  let isSignUp = false;
+
+  function showSignInSignUp() {
+    document.getElementById('front-page').style.display = 'none';
+    document.getElementById('sign-in-sign-up').style.display = 'block';
+  }
+
+  function toggleForm() {
+    isSignUp = !isSignUp;
+    document.getElementById('form-title').textContent = isSignUp ? 'Sign Up' : 'Sign In';
+    document.getElementById('submit-button').textContent = isSignUp ? 'Sign Up' : 'Sign In';
+    document.querySelector('.toggle-button').textContent = isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up";
+    
+    document.getElementById('form-fields').innerHTML = isSignUp ? `
+      <input type="text" id="signup-name" placeholder="Full Name" required>
+      <input type="text" id="signup-username" placeholder="Username" required>
+      <input type="password" id="signup-password" placeholder="Password" required>
+      <span class="password-toggle" onclick="togglePassword('signup-password')">👁️</span>
+      <input type="email" id="signup-email" placeholder="Email" required>
+      <input type="date" id="signup-dob" required>
+    ` : `
+      <input type="text" id="signin-username" placeholder="Username" required>
+      <input type="password" id="signin-password" placeholder="Password" required>
+      <span class="password-toggle" onclick="togglePassword('signin-password')">👁️</span>
+    `;
+  }
+
+  function togglePassword(id) {
+    const field = document.getElementById(id);
+    field.type = field.type === 'password' ? 'text' : 'password';
+  }
+
+  function submitForm() {
+    document.getElementById('loading').style.display = 'block';
+    setTimeout(() => {
+      document.getElementById('loading').style.display = 'none';
+      alert(isSignUp ? 'Sign Up successful!' : 'Sign In successful!');
+      window.location.href = 'college project2.html';
+    }, 2000);
+  }
+</script>
+
+</body>
+</html>
